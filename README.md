@@ -2,7 +2,7 @@
 
 #postgres 使用遇到的错误
 
-```
+```shell
 使用psql -U postgres -d skylar -h 127.0.0.1 -p 5432连接数据库时，出现以下错误：
 
 (1)
@@ -22,7 +22,7 @@ host all all 127.0.0.1/32 trust
 
 ```
 
-```
+```shell
 (2)执行psql -U postgres skylar出现
 psql: 致命错误:  对用户"postgres"的对等认证失败
 解决方法：
