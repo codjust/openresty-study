@@ -82,6 +82,17 @@ postgres_result_timeout 设置结果返回超时时间。
 
 (这里自己遇到了一个坑，要注意postgres的默认端口，在/var/lib/pgsql/9.5/data/postgresql.conf里面修改)
 
+(4)ndk.set_var.set_quote_pgsql_str(md5_sha1)
+```
+ndk.set_var.set_quote_pgsql_str(md5_sha1)的作用是用来转义成适合pg存储格式的字符串
+一般用在拼接sql字符串时使用
+
+```
+例如：
+```lua
+local sql = [[SELECT size FROM file where md5_sha1 =]]..ndk.set_var.set_quote_pgsql_str(md5_sha1)
+```
+
 
 
 
