@@ -1,5 +1,89 @@
 #openresty-study
 
+##CentOS 安装openrsty
+(1)官网下载tar包：
+[https://openresty.org/en/download.html](https://openresty.org/en/download.html)
+选择合适的版本，如：
+```
+    wget https://openresty.org/download/openresty-1.11.2.1.tar.gz
+```
+(2)解压缩
+```
+    tar -xzf openresty-1.11.2.1.tar.gz
+    cd  openresty-1.11.2.1
+```
+(3)按照官网提供的选项进行编译安装：
+```
+    ./configure --prefix=/opt/openresty\
+    --with-luajit\
+    --without-http_redis2_module \
+    --with-http_iconv_module
+```
+
+一般会提示错误：
+```
+    ./configure: error: the HTTP rewrite module requires the PCRE library.
+You can either disable the module by using --without-http_rewrite_module
+option, or install the PCRE library into the system, or build the PCRE library
+statically from the source with nginx by using --with-pcre=<path> option.
+```
+一次性安装安装所缺库：
+```
+yum install -y readline-devel pcre-devel openssl-devel perl
+```
+
+然后：
+```
+    gmake
+    gmake install
+```
+即可
+（4）可以为openresty设置环境变量，我一般使用软链接的形式，你也可以把
+```
+    /opt/openresty/nginx/sbin/
+```
+添加到/etc/profile文件里面，在末尾加上：
+```
+ export PATH=$PATH:/opt/openresty/nginx/sbin 
+```
+然后执行source /etc/profile即可
+使用软链接的形式：
+```
+ln -s /opt/openresty/nginx/sbin/nginx /usr/bin/nginx 
+```
+
+（5）测试openresty是否安装成功：
+```
+$ nginx
+$ curl 127.0.0.1
+```
+使用默认的配置，这个时候访问的结果是：
+```
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to OpenResty!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to OpenResty!</h1>
+<p>If you see this page, the OpenResty web platform is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="https://openresty.org/">openresty.org</a>.<br/>
+
+<p><em>Thank you for flying OpenResty.</em></p>
+</body>
+</html>
+```
+
 ##postgres 使用遇到的错误
 
 ```shell
