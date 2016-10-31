@@ -167,7 +167,8 @@ centos: yum install ncurses-devel
     $ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 在.tmux.conf添加：（如果你是使用我的配置，下面可以省略）
-```# List of plugins
+```
+#List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 
@@ -183,4 +184,30 @@ Reload TMUX environment so TPM is sourced:
 
 # type this in terminal
 $ tmux source ~/.tmux.conf
+```
+
+###安装ZSH
+(1)先安装zsh包
+```
+    yum install zsh
+```
+安装成功之后其实就可以用，但是为了配置个性化，我们一般使用oh my zsh,这里面已经设置好常用的配置
+（2）安装oh my zsh
+```
+ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+```
+
+安装完成会出现一个oh my zsh的图案，表示已经安装成功，这个时候再使用zsh你会发现很多常见的配置都基本有了。
+
+（3）我的.zshrc配置
+下面是我的常用的.zshrc配置，有需要的可以参考下：
+[https://github.com/huchangwei/dotfiles/raw/master/.zshrc](https://github.com/huchangwei/dotfiles/raw/master/.zshrc)
+或者你想直接使用：
+```
+    wget https://github.com/huchangwei/dotfiles/raw/master/.zshrc -P ~
+```
+
+然后source一下即可：
+```
+    source ~/.zshrc
 ```
