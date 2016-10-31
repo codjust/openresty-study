@@ -2,7 +2,7 @@
 Contents
 ===========
 * [Description](#description)
-* [CentOS 安装openrsty](#centos安装openrsty)
+* [CentOS 安装openresty](#centos安装openresty)
 * [postgres 使用遇到的错误](#postgres使用遇到的错误)
 * [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
 * [安装zsh](#安装zsh)
@@ -14,7 +14,7 @@ Description
 记录一些问题和方法，供以后查阅，有错误之处欢迎交流。
 
 [Back to TOC](#contents)
-CentOS安装openrsty
+CentOS安装openresty
 --------
 
 (1)官网下载tar包：
@@ -336,7 +336,8 @@ github上有个不错的配置，也提供了自动安装方式，
 
 Author
 ---------
-huchangwei
+huchangwei<br>
 mail：hcwzqmail@gmail.com
+[Back to TOC](#contents)
 
 
