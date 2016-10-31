@@ -107,7 +107,7 @@ $ git clone https://github.com/tmux/tmux.git
 ```
 
 ```
-    tar -xfz  libevent-2.0.22-stable.tar.gz
+    tar -xzf  libevent-2.0.22-stable.tar.gz
     cd  libevent-2.0.22-stable/
     $ ./configure && make
     $ sudo make install
