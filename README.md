@@ -211,3 +211,12 @@ $ tmux source ~/.tmux.conf
 ```
     source ~/.zshrc
 ```
+
+###配置vim
+github上有个不错的配置，也提供了自动安装方式，
+[https://github.com/ma6174/vim](https://github.com/ma6174/vim)
+
+```
+    wget -qO- https://raw.github.com/ma6174/vim/master/setup.sh | sh -x
+```
+等待安装完即可，至于vim的插件后续添加可以去了解一下vim的插件管理
