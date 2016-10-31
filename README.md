@@ -1,6 +1,21 @@
 #openresty-study
+Contents
+===========
+* [Description](#Description)
+* [CentOS 安装openrsty](#CentOS 安装openrsty)
+* [postgres 使用遇到的错误](#postgres 使用遇到的错误)
+* [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
+* [安装zsh](#安装ZSH)
+* [配置vim](#配置vim)
 
-##CentOS 安装openrsty
+
+Description
+===========
+记录一些问题和方法，供以后查阅，有错误之处欢迎交流。
+
+CentOS 安装openrsty
+--------
+
 (1)官网下载tar包：
 [https://openresty.org/en/download.html](https://openresty.org/en/download.html)
 选择合适的版本，如：
@@ -84,7 +99,8 @@ working. Further configuration is required.</p>
 </html>
 ```
 
-##postgres 使用遇到的错误
+postgres 使用遇到的错误
+---------
 
 ```shell
 使用psql -U postgres -d skylar -h 127.0.0.1 -p 5432连接数据库时，出现以下错误：
@@ -177,7 +193,9 @@ ndk.set_var.set_quote_pgsql_str(md5_sha1)的作用是用来转义成适合pg存�
 local sql = [[SELECT size FROM file where md5_sha1 =]]..ndk.set_var.set_quote_pgsql_str(md5_sha1)
 ```
 
-###源码安装tmux遇到的一些问题，记录下：
+源码安装tmux遇到的一些问题
+--------
+记录下：
 （1）clone 源代码仓库：
 ```
 $ git clone https://github.com/tmux/tmux.git
@@ -270,7 +288,9 @@ Reload TMUX environment so TPM is sourced:
 $ tmux source ~/.tmux.conf
 ```
 
-###安装ZSH
+安装ZSH
+--------
+
 (1)先安装zsh包
 ```
     yum install zsh
@@ -296,7 +316,9 @@ $ tmux source ~/.tmux.conf
     source ~/.zshrc
 ```
 
-###配置vim
+配置vim
+--------
+
 github上有个不错的配置，也提供了自动安装方式，
 [https://github.com/ma6174/vim](https://github.com/ma6174/vim)
 
