@@ -1,11 +1,11 @@
 #openresty-study
 Contents
 ===========
-* [Description](#Description)
-* [CentOS 安装openrsty](#CentOS安装openrsty)
+* [Description](#description)
+* [CentOS 安装openrsty](#centos安装openrsty)
 * [postgres 使用遇到的错误](#postgres使用遇到的错误)
 * [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
-* [安装zsh](#安装ZSH)
+* [安装zsh](#安装zsh)
 * [配置vim](#配置vim)
 
 
@@ -13,6 +13,7 @@ Description
 ===========
 记录一些问题和方法，供以后查阅，有错误之处欢迎交流。
 
+[Back to TOC](#contents)
 CentOS安装openrsty
 --------
 
@@ -98,6 +99,7 @@ working. Further configuration is required.</p>
 </body>
 </html>
 ```
+[Back to TOC](#contents)
 
 postgres使用遇到的错误
 ---------
@@ -192,6 +194,7 @@ ndk.set_var.set_quote_pgsql_str(md5_sha1)的作用是用来转义成适合pg存�
 ```lua
 local sql = [[SELECT size FROM file where md5_sha1 =]]..ndk.set_var.set_quote_pgsql_str(md5_sha1)
 ```
+[Back to TOC](#contents)
 
 源码安装tmux遇到的一些问题
 --------
@@ -287,6 +290,7 @@ Reload TMUX environment so TPM is sourced:
 # type this in terminal
 $ tmux source ~/.tmux.conf
 ```
+[Back to TOC](#contents)
 
 安装ZSH
 --------
@@ -315,6 +319,7 @@ $ tmux source ~/.tmux.conf
 ```
     source ~/.zshrc
 ```
+[Back to TOC](#contents)
 
 配置vim
 --------
@@ -326,3 +331,5 @@ github上有个不错的配置，也提供了自动安装方式，
     wget -qO- https://raw.github.com/ma6174/vim/master/setup.sh | sh -x
 ```
 等待安装完即可，至于vim的插件后续添加可以去了解一下vim的插件管理
+[Back to TOC](#contents)
+
