@@ -2,8 +2,8 @@
 Contents
 ===========
 * [Description](#Description)
-* [CentOS 安装openrsty](#CentOS 安装openrsty)
-* [postgres 使用遇到的错误](#postgres 使用遇到的错误)
+* [CentOS 安装openrsty](#CentOS安装openrsty)
+* [postgres 使用遇到的错误](#postgres使用遇到的错误)
 * [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
 * [安装zsh](#安装ZSH)
 * [配置vim](#配置vim)
@@ -13,7 +13,7 @@ Description
 ===========
 记录一些问题和方法，供以后查阅，有错误之处欢迎交流。
 
-CentOS 安装openrsty
+CentOS安装openrsty
 --------
 
 (1)官网下载tar包：
@@ -99,7 +99,7 @@ working. Further configuration is required.</p>
 </html>
 ```
 
-postgres 使用遇到的错误
+postgres使用遇到的错误
 ---------
 
 ```shell
