@@ -43,7 +43,7 @@ You can either disable the module by using --without-http_rewrite_module
 option, or install the PCRE library into the system, or build the PCRE library
 statically from the source with nginx by using --with-pcre=<path> option.
 ```
-一次性安装安装所缺库：
+一次性安装所缺库：
 ```
 yum install -y readline-devel pcre-devel openssl-devel perl
 ```
@@ -53,7 +53,7 @@ yum install -y readline-devel pcre-devel openssl-devel perl
     gmake
     gmake install
 ```
-即可
+即可<br>
 （4）可以为openresty设置环境变量，我一般使用软链接的形式，你也可以把
 ```
     /opt/openresty/nginx/sbin/
@@ -336,8 +336,8 @@ github上有个不错的配置，也提供了自动安装方式，
 
 Author
 ---------
-huchangwei<br>
-mail：hcwzqmail@gmail.com
+huchangwei(Spotless)<br>
+mail：hcwzqmail@gmail.com<br>
 [Back to TOC](#contents)
 
 
