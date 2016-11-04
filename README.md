@@ -163,9 +163,6 @@ hippo 15010 14857 0 Jul01 ? 00:00:12 nginx: worker process
 # flamegraph.pl flame.cbt > flame.svg;
 ```
 生成火焰图.<br>
-[Back to TOC](#contents)
-
-
 
 常见错误：
 ```
@@ -183,6 +180,7 @@ flamegraph.pl a.cbt > a.svg
 
 ```
 
+[Back to TOC](#contents)
 
 postgres使用遇到的错误
 ---------
