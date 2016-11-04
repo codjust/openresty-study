@@ -3,7 +3,7 @@ Contents
 ===========
 * [Description](#description)
 * [CentOS 安装openresty](#centos安装openresty)
-* [安装火图焰工具](#安装火图焰工具)
+* [安装火焰图工具](#安装火焰图工具)
 * [postgres 使用遇到的错误](#postgres使用遇到的错误)
 * [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
 * [安装zsh](#安装zsh)
@@ -103,7 +103,7 @@ working. Further configuration is required.</p>
 [Back to TOC](#contents)
 
 
-安装火图焰工具
+安装火焰图工具
 --------
 1、安装SystemTap
 首先需要安装内核开发包和调试包（这一步非常重要并且最为繁琐）：
