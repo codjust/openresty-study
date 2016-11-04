@@ -3,6 +3,7 @@ Contents
 ===========
 * [Description](#description)
 * [CentOS 安装openresty](#centos安装openresty)
+* [安装火图焰工具](#安装火图焰工具)
 * [postgres 使用遇到的错误](#postgres使用遇到的错误)
 * [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
 * [安装zsh](#安装zsh)
@@ -100,6 +101,88 @@ working. Further configuration is required.</p>
 </html>
 ```
 [Back to TOC](#contents)
+
+
+安装火图焰工具
+--------
+1、安装SystemTap
+首先需要安装内核开发包和调试包（这一步非常重要并且最为繁琐）：
+```
+# #Installaion:
+# rpm -ivh kernel-debuginfo-($version).rpm
+# rpm -ivh kernel-debuginfo-common-($version).rpm
+# rpm -ivh kernel-devel-($version).rpm
+```
+其中$version使用linux命令 uname -r 查看，需要保证内核版本和上述开发包版本一致才能使用systemtap<br>
+
+先看看自己系统的型号，可以查看：
+如我的的机器:
+```
+[root@VM_52_89_centos nginx]# cat /etc/redhat-release 
+CentOS Linux release 7.2.1511 (Core) 
+[root@VM_52_89_centos nginx]# 
+
+则是CentOS7，查看内核版本：
+[root@localhost ~]# uname -r                     
+ ->3.10.0-327.22.2.el7.x86_64 
+```
+则$version= 3.10.0-327.22.2.el7.x86_64 
+
+再去官网下载rpm包：
+[http://debuginfo.centos.org/](http://debuginfo.centos.org/)
+找到对应的下载链接，wget安装即可。（其中kernel-devel-($version).rpm一般都已经安装了）<br>
+
+测试是否安装成功：
+```
+# yum install systemtap
+# ...
+# 测试systemtap安装成功否：
+# stap -v -e 'probe vfs.read {printf("read performed\n"); exit()}'
+Pass 1: parsed user script and 103 library script(s) using 201628virt/29508res/3144shr/26860data kb, in 10usr/190sys/219real ms.
+Pass 2: analyzed script: 1 probe(s), 1 function(s), 3 embed(s), 0 global(s) using 296120virt/124876res/4120shr/121352data kb, in 660usr/1020sys/1889real ms.
+Pass 3: translated to C into "/tmp/stapffFP7E/stap_82c0f95e47d351a956e1587c4dd4cee1_1459_src.c" using 296120virt/125204res/4448shr/121352data kb, in 10usr/50sys/56real ms.
+Pass 4: compiled C into "stap_82c0f95e47d351a956e1587c4dd4cee1_1459.ko" in 620usr/620sys/1379real ms.
+Pass 5: starting run.
+read performed
+Pass 5: run completed in 20usr/30sys/354real ms.
+```
+2、下载ngx工具包：[https://github.com/openresty/nginx-systemtap-toolkit](https://github.com/openresty/nginx-systemtap-toolkit)；直接clone下来即可;
+这里工具有很多，使用：
+```
+# ps -ef | grep nginx （ps：得到类似这样的输出，其中15010即使worker进程的pid，后面需要用到）
+hippo 14857 1 0 Jul01 ? 00:00:00 nginx: master process /opt/openresty/nginx/sbin/nginx -p /home/hippo/skylar_server_code/nginx/main_server/ -c conf/nginx.conf
+hippo 15010 14857 0 Jul01 ? 00:00:12 nginx: worker process
+# ./ngx-sample-lua-bt -p 15010 --luajit20 -t 5 > tmp.bt （-p 是要抓的进程的pid --luajit20|--luajit51 是LuaJIT的版本 -t是探测的时间，单位是秒， 探测结果输出到tmp.bt）
+# ./fix-lua-bt tmp.bt > flame.bt (处理ngx-sample-lua-bt的输出，使其可读性更佳)
+```
+
+3、下载下载Flame-Graphic生成包：[https://github.com/brendangregg/FlameGraph](https://github.com/brendangregg/FlameGraph)；
+使用ngx工具包抓取想要的信息;
+```
+# stackcollapse-stap.pl flame.bt > flame.cbt
+# flamegraph.pl flame.cbt > flame.svg;
+```
+生成火焰图.<br>
+[Back to TOC](#contents)
+
+
+
+常见错误：
+```
+# sample at 1K Hz for 5 seconds, assuming the Nginx worker
+#   or master process pid is 9768.
+$ ./ngx-sample-lua-bt -p 9768 --luajit20 -t 5 > tmp.bt
+WARNING: Tracing 9766 (/opt/nginx/sbin/nginx) for LuaJIT 2.0...
+WARNING: Time's up. Quitting now...(it may take a while)
+
+$ ./fix-lua-bt tmp.bt > a.bt  #使用这个修复
+
+The resulting output file a.bt can then be used to generate a Flame Graph by using Brendan Gregg's FlameGraph tools:
+stackcollapse-stap.pl a.bt > a.cbt
+flamegraph.pl a.cbt > a.svg
+
+```
+
 
 postgres使用遇到的错误
 ---------
@@ -496,7 +579,7 @@ systemctl start openvpn@server
 systemctl enable openvpn@server
 
 ```
-至此服务端搭建完成。
+至此服务端搭建完成。<br>
 [Back to TOC](#contents)
 
 
