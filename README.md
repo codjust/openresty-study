@@ -7,7 +7,7 @@ Contents
 * [源码安装tmux遇到的一些问题](#源码安装tmux遇到的一些问题)
 * [安装zsh](#安装zsh)
 * [配置vim](#配置vim)
-
+* [CentOS7 安装OpenVPN]()
 
 Description
 ===========
@@ -332,6 +332,173 @@ github上有个不错的配置，也提供了自动安装方式，
 ```
 等待安装完即可，至于vim的插件后续添加可以去了解一下vim的插件管理<br>
 [Back to TOC](#contents)
+
+
+CentOS7安装OpenVPN
+--------
+(1) 安装openvpn包(源里面已经有了)<br>
+```
+    yum install openvpn
+```
+
+（2）查找openvpn安装路径<br>
+我们需要查找的是server.conf文件：
+```
+    rpm -ql openvpn | grep server.conf
+```
+
+查找结果：
+
+```
+/usr/share/doc/openvpn-2.3.10/sample/sample-config-files/roadwarrior-server.conf
+/usr/share/doc/openvpn-2.3.10/sample/sample-config-files/server.conf
+/usr/share/doc/openvpn-2.3.10/sample/sample-config-files/xinetd-server-config
+```
+
+把server.conf复制到etc：
+```
+    cp /usr/share/doc/openvpn-2.3.10/sample/sample-config-files/server.conf /etc/openvpn
+    cd /etc/openvpn
+    vim server.conf
+```
+
+(3) 修改配置文件
+取消以下5个语句的注释：
+```
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 8.8.8.8"
+push "dhcp-option DNS 8.8.4.4"
+user nobody
+group nobody
+```
+
+(4) 使用easy-rsa生成证书和秘钥
+上述配置ok，安装easy-rsa：
+```
+    yum install easy-rsa
+    cp -p /usr/share/easy-rsa /etc/openvpn
+```
+配置easy-rsa
+```
+cd /usr/share/easy-rsa/2.0
+vim vars
+```
+一些个人信息需要配置一下，按自己需求：
+```
+export KEY_COUNTRY="US"
+export KEY_PROVINCE="NY"
+export KEY_CITY="New York"
+export KEY_ORG="Organization Name"
+export KEY_EMAIL="administrator@example.com"
+export KEY_CN=droplet.example.com
+export KEY_NAME=server
+export KEY_OU=server
+export KEY_SIZE=2048
+```
+
+修改完之后source一下：
+```
+    source ./vars
+```
+
+(5) 生成密钥
+生成ca：
+```
+在/etc/openvpn/easy-rsa/2.0目录中执行：
+./clean-all
+./build-ca
+```
+之后会有提示：
+```
+-----
+Country Name (2 letter code) [US]:
+...
+```
+一路回车即可，使用我们配置好的设置。<br>
+然后会在/etc/openvpn/easy-rsa/2.0/keys目录生成ca。
+接着生成服务器生成密钥：
+```
+    ./build-key-server server
+```
+过程同上，一路回车，有了服务器密钥，再生成Diffie Hellman key exchange文件，这里生成的长度由之前的KEY_SIZE决定：
+```
+    ./build-dh
+```
+执行完成会在keys目录产生dh2048.pem (如果你的KEY_SIZE = 1024，这里产生的文件是dh1024.pem)：
+最后将生成的密钥复制到openvpn的目录：
+```
+    cd keys/
+    cp  dh2048.pem ca.crt server.crt server.key /etc/openvpn
+```
+
+(6)生成客户端证书
+在/etc/openvpn/easy-rsa/2.0目录中执行：
+```
+    ./build-key client
+```
+
+会在keys目录生成client证书。
+
+（7）配置防火墙，启动openvpn server
+7-1 防火墙设置<br>
+在CentOS 7中，iptables防火墙已经被firewalld所取代，需要使用如下方法：
+首先启动firewalld
+```
+systemctl start firewalld.service
+```
+查看哪些服务允许通过：
+```
+$ firewall-cmd --list-services     
+dhcpv6-client ssh
+```
+我的允许通过的只有：dhcpv6-client ssh<br>
+添加openvpn：
+```
+$ firewall-cmd --add-service openvpn
+success
+$ firewall-cmd --permanent --add-service openvpn
+success
+```
+看看是否添加成功：
+```
+$ firewall-cmd --list-services      
+dhcpv6-client openvpn ssh
+
+```
+
+最后添加masquerade：
+```
+$ firewall-cmd --add-masquerade
+success
+$ firewall-cmd --permanent --add-masquerade
+success
+检查masquerade是否添加成功：
+$ firewall-cmd --query-masquerade
+yes
+```
+
+7-2 允许IP转发 <br>
+在sysctl中开启IP转发
+```
+vim /etc/sysctl.conf
+
+# Controls IP packet forwarding
+net.ipv4.ip_forward = 1
+
+```
+
+7-3 启动openvpn服务
+```
+启动OpenVPN服务器并添加自动启动项：
+
+sysctl -p
+systemctl start openvpn@server
+systemctl enable openvpn@server
+
+```
+至此服务端搭建完成。
+
+
 
 
 Author
