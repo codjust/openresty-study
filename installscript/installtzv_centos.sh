@@ -13,6 +13,7 @@ sudo make install
 echo "libevent install successful"
 echo "Install tmux..."
 
+yum install -y git
 cd $CURRENT_DIR
 git clone https://github.com/tmux/tmux.git
 cd tmux/
