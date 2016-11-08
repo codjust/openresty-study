@@ -18,7 +18,7 @@ cd $CURRENT_DIR
 git clone https://github.com/tmux/tmux.git
 cd tmux/
 
-yum install -y ncurses-devel  automake
+yum install -y ncurses-devel  automake gcc
 sh autogen.sh
 ./configure && make
 ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib64/libevent-2.0.so.5 
@@ -33,7 +33,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 wget https://github.com/huchangwei/dotfiles/raw/master/.tmux.conf  -P ~
 tmux source ~/.tmux.conf 
 echo "Plugin install successful!"
-sleep(1)
 
 
 echo "Install zsh...."
