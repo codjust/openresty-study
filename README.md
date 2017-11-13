@@ -15,6 +15,7 @@ Description
 记录一些问题和方法，供以后查阅，有错误之处欢迎交流。
 
 [Back to TOC](#contents)
+
 CentOS安装openresty
 --------
 
@@ -584,7 +585,7 @@ systemctl enable openvpn@server
 
 Author
 ---------
-huchangwei(Spotless)<br>
+huchangwei(codjust)<br>
 mail：hcwzqmail@gmail.com<br>
 [Back to TOC](#contents)
 
